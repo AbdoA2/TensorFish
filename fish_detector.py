@@ -69,14 +69,15 @@ class FishDetector(BaseClassifier):
 
 datasets = get_data()
 fish_detector = FishDetector([32, 32, 3], 2, "detector_log")
-#fish_detector.load_model("detector_log")
 
-fish_detector.train(datasets.train, 1e-3, 180, 000, "detector_log")
+start_time = time.time()
 
-#datasets.test.X = np.concatenate((datasets.test.X, datasets.test.X), axis=0)
-#datasets.test.y = np.concatenate((datasets.test.y, datasets.test.y), axis=0)
-print(len(datasets.test.X))
-predicted = fish_detector.predict(datasets.test, len(datasets.test.X))
+fish_detector.train(datasets.train.X, datasets.train.y, 1e-3, 180, 2000, True)
+
+predicted = fish_detector.predict(datasets.test.X, len(datasets.test.X))
 print(predicted)
 
 evaluate(np.argmax(datasets.test.y, axis=1), predicted, 2)
+
+duration = time.time() - start_time
+print("Time: %.4f seconds" % duration)
