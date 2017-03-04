@@ -34,10 +34,10 @@ def batch_norm_wrapper(inputs, is_training):
         train_var = tf.assign(pop_var, batch_var)
         with tf.control_dependencies([train_mean, train_var]):
             return tf.nn.batch_normalization(inputs,
-                batch_mean, batch_var, beta, scale, 1e3)
+                batch_mean, batch_var, beta, scale, 1e-3)
     else:
         return tf.nn.batch_normalization(inputs,
-            pop_mean, pop_var, beta, scale, 1e3)
+            pop_mean, pop_var, beta, scale, 1e-3)
 
 
 def build_layer(layer_type, inputs, params={}):
